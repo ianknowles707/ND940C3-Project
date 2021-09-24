@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
     private var downloadID: Long = 0
 
     //Define the URL variable for DownloadManager to use
-    private lateinit var URL : String
+    private lateinit var URL: String
 
     //Define boolean to check if download file has been selected
     var downloadFileSelected = false
@@ -48,7 +48,24 @@ class MainActivity : AppCompatActivity() {
         override fun onReceive(context: Context?, intent: Intent?) {
             val id = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
             if (id == downloadID) {
-                Log.i("Download", "Complete")
+                //Check status of download
+                val downloadManager = getSystemService(DOWNLOAD_SERVICE) as DownloadManager
+                val query = DownloadManager.Query()
+                query.setFilterById(id)
+                val cursor = downloadManager.query(query)
+                if (cursor.moveToFirst()) {
+                    val status = cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS))
+                    if (status == DownloadManager.STATUS_SUCCESSFUL) {
+                        Log.i("Download", "Complete")
+                    }
+
+                    if (status == DownloadManager.STATUS_FAILED) {
+                        Log.i("Download", "Failed")
+                    }
+
+                }
+
+
             }
         }
     }
