@@ -9,6 +9,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -24,6 +25,7 @@ class MainActivity : AppCompatActivity() {
 
     //Define the URL variable for DownloadManager to use
     private lateinit var URL: String
+    private lateinit var filename: String
 
     //Define boolean to check if download file has been selected
     var downloadFileSelected = false
@@ -56,16 +58,16 @@ class MainActivity : AppCompatActivity() {
                 if (cursor.moveToFirst()) {
                     val status = cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS))
                     if (status == DownloadManager.STATUS_SUCCESSFUL) {
-                        Log.i("Download", "Complete")
+                        Log.i("Download", "Success")
                     }
-
                     if (status == DownloadManager.STATUS_FAILED) {
+                        //If download failed, get additional information to display
+                        val error =
+                            cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_REASON))
                         Log.i("Download", "Failed")
+                        Log.i("Download ", error.toString())
                     }
-
                 }
-
-
             }
         }
     }
@@ -76,13 +78,16 @@ class MainActivity : AppCompatActivity() {
                 DownloadManager.Request(Uri.parse(URL))
                     .setTitle(getString(R.string.app_name))
                     .setDescription(getString(R.string.app_description))
+                    .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,"download.zip")
+                    .setMimeType()
                     .setRequiresCharging(false)
                     .setAllowedOverMetered(true)
                     .setAllowedOverRoaming(true)
 
-            val downloadManager = getSystemService(DOWNLOAD_SERVICE) as DownloadManager
-            downloadID =
-                downloadManager.enqueue(request)// enqueue puts the download request in the queue.
+            val downloadManager =
+                getSystemService(DOWNLOAD_SERVICE) as DownloadManager            // enqueue puts the download request in the queue.
+            // enqueue puts the download request in the queue.
+            downloadID = downloadManager.enqueue(request)
             Log.i("Download", "Started")
         } else {
             Toast.makeText(
