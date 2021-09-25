@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity() {
 
     //Define the URL variable for DownloadManager to use
     private lateinit var URL: String
+    private lateinit var baseURL: String
     private lateinit var filename: String
 
     //Define boolean to check if download file has been selected
@@ -42,10 +43,12 @@ class MainActivity : AppCompatActivity() {
         registerReceiver(receiver, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
 
         custom_button.setOnClickListener {
-            download()
+            download(filename)
         }
     }
 
+    //On receipt of 'download complete' broadcast, check for download status
+    //and error code (if applicable)
     private val receiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             val id = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
@@ -72,14 +75,17 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun download() {
+    //Use DownloadManager to get the repository requested
+    private fun download(filename: String) {
         if (downloadFileSelected) {
             val request =
                 DownloadManager.Request(Uri.parse(URL))
                     .setTitle(getString(R.string.app_name))
                     .setDescription(getString(R.string.app_description))
-                    .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,"download.zip")
-                    .setMimeType()
+                    .setDestinationInExternalPublicDir(
+                        Environment.DIRECTORY_DOWNLOADS,
+                        filename
+                    )
                     .setRequiresCharging(false)
                     .setAllowedOverMetered(true)
                     .setAllowedOverRoaming(true)
@@ -100,23 +106,29 @@ class MainActivity : AppCompatActivity() {
     }
 
     companion object {
-        //        private const var URL =
-//            "https://github.com/udacity/nd940-c3-advanced-android-programming-project-starter/archive/master.zip"
         private const val CHANNEL_ID = "channelId"
     }
 
-    //Set the download URL depending on which option was selected
+    //Set the download URL and filename depending on which option was selected
     fun OnRadioButtonClicked(view: android.view.View) {
         downloadFileSelected = true
         when (view.id) {
-            R.id.radio_button_glide ->
-                URL = "https://github.com/bumptech/glide"
-            R.id.radio_loadapp ->
-                URL =
+            R.id.radio_button_glide -> {
+                baseURL = "https://github.com/bumptech/glide"
+                filename = "glide.zip"
+            }
+            R.id.radio_loadapp -> {
+                baseURL =
                     "https://github.com/udacity/nd940-c3-advanced-android-programming-project-starter/archive/master.zip"
-            R.id.radio_retrofit ->
-                URL = "https://github.com/square/retrofit"
+                filename = "nd940c3.zip"
+            }
+            R.id.radio_retrofit -> {
+                baseURL = "https://github.com/square/retrofit"
+                filename = "retrofit.zip"
+            }
         }
+        val githubEnd = "/archive/refs/heads/master.zip"
+        URL = "$baseURL$githubEnd"
     }
 
 }
