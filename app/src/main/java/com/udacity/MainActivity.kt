@@ -29,7 +29,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var filename: String
 
     //Define boolean to check if download file has been selected
-    var downloadFileSelected = false
+    private var downloadFileSelected = false
+    private var downloadStatus = ""
 
     private lateinit var notificationManager: NotificationManager
     private lateinit var pendingIntent: PendingIntent
@@ -62,6 +63,7 @@ class MainActivity : AppCompatActivity() {
                     val status = cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS))
                     if (status == DownloadManager.STATUS_SUCCESSFUL) {
                         Log.i("Download", "Success")
+                        downloadStatus = resources.getString(R.string.status_success)
                     }
                     if (status == DownloadManager.STATUS_FAILED) {
                         //If download failed, get additional information to display
@@ -69,8 +71,15 @@ class MainActivity : AppCompatActivity() {
                             cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_REASON))
                         Log.i("Download", "Failed")
                         Log.i("Download ", error.toString())
+                        downloadStatus = resources.getString(R.string.status_failed)
                     }
+                    Toast.makeText(
+                        applicationContext,
+                        "Status: $downloadStatus",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
+
             }
         }
     }
@@ -91,14 +100,15 @@ class MainActivity : AppCompatActivity() {
                     .setAllowedOverRoaming(true)
 
             val downloadManager =
-                getSystemService(DOWNLOAD_SERVICE) as DownloadManager            // enqueue puts the download request in the queue.
+                getSystemService(DOWNLOAD_SERVICE) as DownloadManager
             // enqueue puts the download request in the queue.
             downloadID = downloadManager.enqueue(request)
             Log.i("Download", "Started")
         } else {
+            val messageText = resources.getString(R.string.no_option_selected_message)
             Toast.makeText(
                 this,
-                "Please select a file to download",
+                messageText,
                 Toast.LENGTH_SHORT
             ).show()
         }
@@ -114,20 +124,19 @@ class MainActivity : AppCompatActivity() {
         downloadFileSelected = true
         when (view.id) {
             R.id.radio_button_glide -> {
-                baseURL = "https://github.com/bumptech/glide"
-                filename = "glide.zip"
+                baseURL = resources.getString(R.string.glide_base_url)
+                filename = resources.getString(R.string.glide_filename)
             }
             R.id.radio_loadapp -> {
-                baseURL =
-                    "https://github.com/udacity/nd940-c3-advanced-android-programming-project-starter/archive/master.zip"
-                filename = "nd940c3.zip"
+                baseURL = resources.getString(R.string.loadapp_base_url)
+                filename = resources.getString(R.string.loadapp_filename)
             }
             R.id.radio_retrofit -> {
-                baseURL = "https://github.com/square/retrofit"
-                filename = "retrofit.zip"
+                baseURL = resources.getString(R.string.retrofit_base_url)
+                filename = resources.getString(R.string.retrofil_filename)
             }
         }
-        val githubEnd = "/archive/refs/heads/master.zip"
+        val githubEnd = resources.getString(R.string.github_url_end)
         URL = "$baseURL$githubEnd"
     }
 

@@ -11,9 +11,19 @@
     <string name="button_name">Click me</string>
     <string name="button_loading">We are loading </string>
     <string name="title_activity_detail">DetailActivity</string>
-    <string name="glide_radio">Glide - Image loading library by bumpTech</string>
-    <string name="loadapp_radio">LoadApp - Current Repository by Udacity</string>
-    <string name="retrofit_radio">Retrofit - Type safe HTTP client for Android and Java by Square Inc.</string>
+    <string name="glide_description">Glide - Image loading library by bumpTech</string>
+    <string name="loadapp_description">LoadApp - Current Repository by Udacity</string>
+    <string name="retrofit_description">Retrofit - Type safe HTTP client for Android and Java by Square Inc.</string>
     <string name="download_image_content_description">File download image</string>
 
+    <string name="glide_base_url">https://github.com/bumptech/glideXXX</string>
+    <string name="loadapp_base_url">https://github.com/udacity/nd940-c3-advanced-android-programming-project-starter</string>
+    <string name="retrofit_base_url">https://github.com/bumptech/glide</string>
+    <string name="github_url_end">/archive/refs/heads/master.zip</string>
+    <string name="loadapp_filename">nd940c3.zip</string>
+    <string name="glide_filename">glide.zip</string>
+    <string name="retrofil_filename">retrofit.zip</string>
+    <string name="no_option_selected_message">Please select a file to download</string>
+    <string name="status_success">Success</string>
+    <string name="status_failed">Failed</string>
 </resources>
