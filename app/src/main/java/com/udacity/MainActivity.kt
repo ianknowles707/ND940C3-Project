@@ -1,6 +1,7 @@
 package com.udacity
 
 import android.app.DownloadManager
+import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.BroadcastReceiver
@@ -8,12 +9,15 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
+import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 
@@ -36,6 +40,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var pendingIntent: PendingIntent
     private lateinit var action: NotificationCompat.Action
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -43,10 +48,46 @@ class MainActivity : AppCompatActivity() {
 
         registerReceiver(receiver, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
 
+        //call function to create the notification channel
+        createChannel(
+            getString(R.string.notification_channel_id),
+            getString(R.string.notification_channel_name)
+        )
+
         custom_button.setOnClickListener {
             download(filename)
         }
     }
+
+    //Create the notification channel for download notifications
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun createChannel(channelId: String, channelName: String) {
+        val notificationChannel = NotificationChannel(
+            channelId,
+            channelName,
+            NotificationManager.IMPORTANCE_DEFAULT
+        )
+        notificationChannel.enableVibration(true)
+        notificationChannel.description =
+            applicationContext.getString(R.string.notification_channel_description)
+
+        val notificationManager = getSystemService(NotificationManager::class.java)
+        notificationManager.createNotificationChannel(notificationChannel)
+    }
+
+    //Call the notification function and include status of download to
+    //show in the notification
+    fun sendNotification(id: Long, status: String) {
+        val notificationManager = ContextCompat.getSystemService(
+            applicationContext,
+            NotificationManager::class.java
+        ) as NotificationManager
+        val bodyText = applicationContext.getString(R.string.download_complete)
+        val bodyMessage = String.format(bodyText, downloadStatus)
+        notificationManager.sendNotification(id, bodyMessage, applicationContext)
+
+    }
+
 
     //On receipt of 'download complete' broadcast, check for download status
     //and error code (if applicable)
@@ -63,7 +104,7 @@ class MainActivity : AppCompatActivity() {
                     val status = cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS))
                     if (status == DownloadManager.STATUS_SUCCESSFUL) {
                         Log.i("Download", "Success")
-                        downloadStatus = resources.getString(R.string.status_success)
+                        downloadStatus = resources.getString(R.string.download_success)
                     }
                     if (status == DownloadManager.STATUS_FAILED) {
                         //If download failed, get additional information to display
@@ -71,13 +112,9 @@ class MainActivity : AppCompatActivity() {
                             cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_REASON))
                         Log.i("Download", "Failed")
                         Log.i("Download ", error.toString())
-                        downloadStatus = resources.getString(R.string.status_failed)
+                        downloadStatus = resources.getString(R.string.download_failed)
                     }
-                    Toast.makeText(
-                        applicationContext,
-                        "Status: $downloadStatus",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    sendNotification(downloadID, downloadStatus)
                 }
 
             }

@@ -4,9 +4,11 @@
     <string name="action_settings">Settings</string>
 
 
-    <string name="notification_title">Udacity: Android Kotlin Nanodegree </string>
-    <string name="notification_description">The Project 3 repository is downloaded</string>
-    <string name="notification_button">See changes</string>
+    <string name="notification_title">LoadApp download request </string>
+    <string name="notification_button">View download details</string>
+    <string name="notification_channel_id">download</string>
+    <string name="notification_channel_name">Download complete</string>
+    <string name="notification_channel_description">Download completed</string>
 
     <string name="button_name">Click me</string>
     <string name="button_loading">We are loading </string>
@@ -24,6 +26,7 @@
     <string name="glide_filename">glide.zip</string>
     <string name="retrofil_filename">retrofit.zip</string>
     <string name="no_option_selected_message">Please select a file to download</string>
-    <string name="status_success">Success</string>
-    <string name="status_failed">Failed</string>
+    <string name="download_complete">Download completed. Status: %1$S</string>
+    <string name="download_success">Success</string>
+    <string name="download_failed">Failed</string>
 </resources>
