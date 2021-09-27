@@ -9,6 +9,9 @@
     <string name="notification_channel_id">download</string>
     <string name="notification_channel_name">Download complete</string>
     <string name="notification_channel_description">Download completed</string>
+    <string name="download_request">downloadFile</string>
+    <string name="error_message">error</string>
+    <string name="download_status">status</string>
 
     <string name="button_name">Click me</string>
     <string name="button_loading">We are loading </string>

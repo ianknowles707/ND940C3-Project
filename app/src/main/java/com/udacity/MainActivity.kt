@@ -36,10 +36,6 @@ class MainActivity : AppCompatActivity() {
     private var downloadFileSelected = false
     private var downloadStatus = ""
 
-    private lateinit var notificationManager: NotificationManager
-    private lateinit var pendingIntent: PendingIntent
-    private lateinit var action: NotificationCompat.Action
-
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,14 +73,26 @@ class MainActivity : AppCompatActivity() {
 
     //Call the notification function and include status of download to
     //show in the notification
-    fun sendNotification(id: Long, status: String) {
+    fun sendNotification(
+        fileName: String,
+        errorMessage: Int,
+        id: Long,
+        status: String
+    ) {
         val notificationManager = ContextCompat.getSystemService(
             applicationContext,
             NotificationManager::class.java
         ) as NotificationManager
         val bodyText = applicationContext.getString(R.string.download_complete)
         val bodyMessage = String.format(bodyText, downloadStatus)
-        notificationManager.sendNotification(id, bodyMessage, applicationContext)
+        notificationManager.sendNotification(
+            fileName,
+            status,
+            errorMessage,
+            id,
+            bodyMessage,
+            applicationContext
+        )
 
     }
 
@@ -102,19 +110,19 @@ class MainActivity : AppCompatActivity() {
                 val cursor = downloadManager.query(query)
                 if (cursor.moveToFirst()) {
                     val status = cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS))
+                    val returnedError =
+                        cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_REASON))
                     if (status == DownloadManager.STATUS_SUCCESSFUL) {
                         Log.i("Download", "Success")
                         downloadStatus = resources.getString(R.string.download_success)
                     }
                     if (status == DownloadManager.STATUS_FAILED) {
-                        //If download failed, get additional information to display
-                        val error =
-                            cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_REASON))
                         Log.i("Download", "Failed")
-                        Log.i("Download ", error.toString())
+                        Log.i("Download ", returnedError.toString())
                         downloadStatus = resources.getString(R.string.download_failed)
                     }
-                    sendNotification(downloadID, downloadStatus)
+                    sendNotification(filename, returnedError, downloadID, downloadStatus)
+
                 }
 
             }
