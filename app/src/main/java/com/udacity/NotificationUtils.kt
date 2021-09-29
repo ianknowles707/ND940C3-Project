@@ -6,6 +6,8 @@ import android.content.Context
 import android.content.Intent
 import androidx.core.app.NotificationCompat
 
+//Create extension function to send the notifications. Additional parameters used
+//to provide extra information tin Intent call
 fun NotificationManager.sendNotification(
     fileName: String,
     status: String,
@@ -16,16 +18,18 @@ fun NotificationManager.sendNotification(
 ) {
     //Create the Intent to open Details Activity from notification
     val contentIntent = Intent(applicationContext, DetailActivity::class.java)
-    //Add extra information to the Intent request, for display on the Details Activity
+    //Add the extra information to the Intent request, for display on the Details Activity
     contentIntent.putExtra(applicationContext.getString(R.string.download_request), fileName)
     contentIntent.putExtra(applicationContext.getString(R.string.error_message), errorMessage)
     contentIntent.putExtra(applicationContext.getString(R.string.download_status), status)
+    contentIntent.putExtra(applicationContext.getString(R.string.id), id)
     val detailPendingIntent: PendingIntent = PendingIntent.getActivity(
         applicationContext,
         id.toInt(),
         contentIntent,
         0
     )
+    //Construct the notification
     val notificationBuilder = NotificationCompat.Builder(
         applicationContext,
         applicationContext.getString(R.string.notification_channel_id)
@@ -33,6 +37,8 @@ fun NotificationManager.sendNotification(
         .setSmallIcon(R.drawable.notification_icon)
         .setContentTitle(applicationContext.getString(R.string.notification_title))
         .setContentText(messageBody)
+
+        //Add action to navigate to Detail Activity
         .addAction(
             R.drawable.download_image,
             applicationContext.getString(R.string.notification_button),
@@ -40,4 +46,8 @@ fun NotificationManager.sendNotification(
         )
 
     notify(id.toInt(), notificationBuilder.build())
+}
+
+fun NotificationManager.cancelNotification(id: Long){
+    cancel(id.toInt())
 }

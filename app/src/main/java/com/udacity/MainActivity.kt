@@ -3,7 +3,6 @@ package com.udacity
 import android.app.DownloadManager
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -16,7 +15,6 @@ import android.util.Log
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
@@ -28,7 +26,7 @@ class MainActivity : AppCompatActivity() {
     private var downloadID: Long = 0
 
     //Define the URL variable for DownloadManager to use
-    private lateinit var URL: String
+    private lateinit var url: String
     private lateinit var baseURL: String
     private lateinit var filename: String
 
@@ -93,12 +91,13 @@ class MainActivity : AppCompatActivity() {
             bodyMessage,
             applicationContext
         )
-
     }
 
 
     //On receipt of 'download complete' broadcast, check for download status
-    //and error code (if applicable)
+    //and error code (if applicable). Log messages added to record the status.
+    //Additional info passed to notification function so it can be passed as 'extra'
+    //in the Activity Intent
     private val receiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             val id = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
@@ -112,10 +111,12 @@ class MainActivity : AppCompatActivity() {
                     val status = cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS))
                     val returnedError =
                         cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_REASON))
+                    //Log successful download and set user readable message text
                     if (status == DownloadManager.STATUS_SUCCESSFUL) {
                         Log.i("Download", "Success")
                         downloadStatus = resources.getString(R.string.download_success)
                     }
+                    //Log failed download and set user readable message text
                     if (status == DownloadManager.STATUS_FAILED) {
                         Log.i("Download", "Failed")
                         Log.i("Download ", returnedError.toString())
@@ -133,7 +134,7 @@ class MainActivity : AppCompatActivity() {
     private fun download(filename: String) {
         if (downloadFileSelected) {
             val request =
-                DownloadManager.Request(Uri.parse(URL))
+                DownloadManager.Request(Uri.parse(url))
                     .setTitle(getString(R.string.app_name))
                     .setDescription(getString(R.string.app_description))
                     .setDestinationInExternalPublicDir(
@@ -160,12 +161,9 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    companion object {
-        private const val CHANNEL_ID = "channelId"
-    }
 
     //Set the download URL and filename depending on which option was selected
-    fun OnRadioButtonClicked(view: android.view.View) {
+    fun onRadioButtonClicked(view: android.view.View) {
         downloadFileSelected = true
         when (view.id) {
             R.id.radio_button_glide -> {
@@ -182,7 +180,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
         val githubEnd = resources.getString(R.string.github_url_end)
-        URL = "$baseURL$githubEnd"
+        url = "$baseURL$githubEnd"
     }
 
 }

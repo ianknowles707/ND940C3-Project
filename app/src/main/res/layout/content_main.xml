@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_small"
             android:minHeight="48dp"
-            android:onClick="OnRadioButtonClicked"
+            android:onClick="onRadioButtonClicked"
             android:text="@string/glide_description" />
 
         <RadioButton
@@ -46,7 +46,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_small"
             android:minHeight="48dp"
-            android:onClick="OnRadioButtonClicked"
+            android:onClick="onRadioButtonClicked"
             android:text="@string/loadapp_description" />
 
         <RadioButton
@@ -55,7 +55,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_small"
             android:minHeight="48dp"
-            android:onClick="OnRadioButtonClicked"
+            android:onClick="onRadioButtonClicked"
             android:text="@string/retrofit_description" />
     </RadioGroup>
 
