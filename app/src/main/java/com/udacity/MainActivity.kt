@@ -48,9 +48,12 @@ class MainActivity : AppCompatActivity() {
             getString(R.string.notification_channel_name)
         )
 
-        custom_button.setOnClickListener {
+        //Start download and start animated View
+        animated_button.setOnClickListener {
+            animated_button.buttonState = ButtonState.Loading
             download(filename)
         }
+
     }
 
     //Create the notification channel for download notifications

@@ -26,7 +26,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="@dimen/normal_padding"
-        app:layout_constraintBottom_toTopOf="@id/custom_button"
+        app:layout_constraintBottom_toTopOf="@id/animated_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/image_download">
@@ -62,23 +62,23 @@
             android:text="@string/retrofit_description" />
     </RadioGroup>
 
-    <Button
-        android:id="@+id/custom_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/radio_group" />
+<!--    <Button-->
+<!--        android:id="@+id/custom_button"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/radio_group" />-->
 
-    <!--    <com.udacity.LoadingButton-->
-    <!--        android:id="@+id/custom_button"-->
-    <!--        android:layout_width="0dp"-->
-    <!--        android:layout_height="60dp"-->
-    <!--        android:layout_margin="20dp"-->
-    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toBottomOf="@id/radio_group" />-->
+        <com.udacity.LoadingButton
+            android:id="@+id/animated_button"
+            android:layout_width="100dp"
+            android:layout_height="60dp"
+            android:layout_margin="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/radio_group" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
