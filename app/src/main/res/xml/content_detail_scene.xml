@@ -53,20 +53,22 @@
     <ConstraintSet android:id="@+id/end">
         <Constraint
             android:id="@id/filename_label_textview"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/large_padding"
             android:layout_marginBottom="@dimen/normal_padding"
+            app:layout_constraintEnd_toStartOf="@id/filename_textview"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Constraint
             android:id="@+id/filename_textview"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/large_padding"
             android:layout_marginBottom="@dimen/normal_padding"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/filename_label_textview"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Constraint

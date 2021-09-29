@@ -25,13 +25,14 @@ class DetailActivity : AppCompatActivity() {
             intent.getIntExtra(applicationContext.getString(R.string.error_message), -1)
         val id = intent.getLongExtra(applicationContext.getString(R.string.id), 0)
 
-        //Cancel the notification
+        //Cancel the notification (specific, not all notifications)
         cancelNotification(id)
 
         //Set values of retrieved information to TextViews
         val showText = determineDownloadDisplayText(filename)
         filename_textview.text = showText
         status_textview.text = status
+
         //Show status as GREEN if success, or RED if failed
         setStatusColor(status)
 
@@ -39,6 +40,11 @@ class DetailActivity : AppCompatActivity() {
         val errorText = setErrorMessage(errorMessage)
         error_textview.text = errorText
         showError(status)
+
+        //
+        button_return.setOnClickListener {
+            finish()
+        }
     }
 
     private fun cancelNotification(id: Long) {

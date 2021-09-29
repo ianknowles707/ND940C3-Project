@@ -13,19 +13,18 @@
     <TextView
         android:id="@+id/filename_label_textview"
         style="@style/label_text"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/file_name_label"
-        />
+        tools:layout_editor_absoluteX="40dp" />
 
     <TextView
         android:id="@+id/filename_textview"
         style="@style/label_text"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textColor="@android:color/black"
-        android:maxWidth="180dp"
-        tools:text="Retrofit" />
+        tools:text="Retrofit library for downloading from the internet etc etc " />
 
     <TextView
         android:id="@+id/status_label_textview"
