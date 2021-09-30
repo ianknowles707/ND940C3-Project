@@ -1,5 +1,6 @@
 package com.udacity
 
+import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
@@ -9,12 +10,19 @@ import kotlin.properties.Delegates
 class LoadButton @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
-    private var currentWidth = 0
-    private var maxWidth = 0
-    private var buttonHeight = 0
+    private var currentWidth = 0f
+    private var maxWidth = 0f
+    private var buttonHeight = 0f
     private var buttonText = ""
 
-    private lateinit var rect: Rect
+    //Define the button base - lazy ensure it will be set when called (after onSizeChanged)
+    private val rectBase by lazy {
+        RectF(0f, 0f, maxWidth, buttonHeight)
+    }
+
+    private val rectAnimated by lazy {
+        RectF(0f, 0f, currentWidth, buttonHeight)
+    }
 
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.FILL
@@ -27,19 +35,19 @@ class LoadButton @JvmOverloads constructor(
         when (new) {
             ButtonState.Loading -> {
                 buttonText = resources.getString(R.string.download_button_loading)
-                invalidate()
+                animateLoadButton()
             }
 
-//            ButtonState.Clicked -> {
-//
-//            }
+            ButtonState.Clicked -> {
+
+            }
 
             ButtonState.Completed -> {
                 buttonText = resources.getString(R.string.download_button_default)
-                invalidate()
-
+                currentWidth = 0f
             }
         }
+        invalidate()
     }
 
     init {
@@ -48,20 +56,34 @@ class LoadButton @JvmOverloads constructor(
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
-        maxWidth = w
-        buttonHeight = h
+        maxWidth = w.toFloat()
+        buttonHeight = h.toFloat()
     }
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
-        var x = (maxWidth / 2).toFloat()
-        var y = (buttonHeight / 2).toFloat()
+        val x = (maxWidth / 2)
+        val y = (buttonHeight / 2)
 
-        rect = Rect(0, 0, maxWidth, buttonHeight)
-        paint.color = Color.LTGRAY
-        canvas?.drawRect(rect, paint)
+        paint.color = Color.GRAY
+        canvas?.drawRect(rectBase, paint)
 
-        paint.color=Color.BLUE
+        paint.color = Color.BLUE
+        canvas?.drawRect(rectAnimated, paint)
+
+        paint.color = Color.WHITE
         canvas?.drawText(buttonText, x, y, paint)
+    }
+
+    private fun animateLoadButton() {
+        val animator = ValueAnimator.ofFloat(0f, maxWidth)
+        animator.duration = 2000
+        animator.repeatMode = ValueAnimator.RESTART
+        animator.repeatCount = ValueAnimator.INFINITE
+        animator.addUpdateListener { value ->
+            currentWidth = value.animatedValue as Float
+            invalidate()
+        }
+        animator.start()
     }
 }
