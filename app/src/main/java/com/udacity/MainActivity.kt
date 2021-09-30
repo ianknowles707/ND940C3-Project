@@ -24,11 +24,11 @@ class MainActivity : AppCompatActivity() {
 
     //Long type variable to store the download identifier ID
     private var downloadID: Long = 0
+    private var filename = ""
 
     //Define the URL variable for DownloadManager to use
     private lateinit var url: String
     private lateinit var baseURL: String
-    private lateinit var filename: String
 
     //Define boolean to check if download file has been selected
     private var downloadFileSelected = false
@@ -160,6 +160,7 @@ class MainActivity : AppCompatActivity() {
                 messageText,
                 Toast.LENGTH_SHORT
             ).show()
+            animated_button.buttonState = ButtonState.Completed
         }
 
     }

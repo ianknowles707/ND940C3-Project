@@ -5,8 +5,6 @@ import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
-import androidx.core.view.marginLeft
-import androidx.core.view.marginRight
 import kotlin.properties.Delegates
 
 class LoadingButton @JvmOverloads constructor(
@@ -15,6 +13,14 @@ class LoadingButton @JvmOverloads constructor(
     private var widthSize = 100
     private var heightSize = 50
     private var radius = 0.0f
+    private var rect: Rect
+
+    private val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        style = Paint.Style.FILL
+        textAlign = Paint.Align.CENTER
+        textSize = 55.0f
+        typeface = Typeface.create("", Typeface.BOLD)
+    }
 
     private val valueAnimator = ValueAnimator()
 
@@ -29,26 +35,22 @@ class LoadingButton @JvmOverloads constructor(
             ButtonState.Completed -> {
 
             }
-
         }
-    }
-
-    private val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        style = Paint.Style.FILL
-        textAlign = Paint.Align.CENTER
-        textSize = 55.0f
-        typeface = Typeface.create("", Typeface.BOLD)
     }
 
     init {
         isClickable = true
+        rect = Rect(0, 0, widthSize, heightSize)
     }
 
+    override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
+        widthSize = w
+        heightSize = h
+    }
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
-        paint.color = if (buttonState == ButtonState.Completed) Color.LTGRAY else Color.BLUE
-        val rect = Rect(0, 0, widthSize, heightSize)
+        paint.color = Color.RED
         canvas?.drawRect(rect, paint)
     }
 
