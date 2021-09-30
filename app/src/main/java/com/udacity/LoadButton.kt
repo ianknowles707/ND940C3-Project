@@ -26,6 +26,9 @@ class LoadButton @JvmOverloads constructor(
     private var circleBottom = 0f
 
     private var buttonText = ""
+
+    //Get object references for the animators. This is needed to ensure
+    //we have a reference to call .end() when download complete
     private lateinit var animator: ValueAnimator
     private lateinit var animatorCircle: ValueAnimator
 
@@ -41,6 +44,7 @@ class LoadButton @JvmOverloads constructor(
     //so will be passed later
     private lateinit var rectAnimated: RectF
 
+    //Define RectF object to contain the circle
     private lateinit var circleAnimated: RectF
 
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
@@ -70,9 +74,10 @@ class LoadButton @JvmOverloads constructor(
                     animator.end()
                     animatorCircle.end()
                 }
+                //Reset to initial values
                 currentWidth = 0f
                 angle = 0f
-
+                //Define the rectangle/circle (initial state)
                 rectAnimated = RectF(0f, 0f, currentWidth, buttonHeight)
                 circleAnimated = RectF(circleLeft, circleTop, circleRight, circleBottom)
             }
@@ -85,6 +90,7 @@ class LoadButton @JvmOverloads constructor(
         buttonState = ButtonState.Completed
     }
 
+    //Use method to calculate the size of the various elements
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         maxWidth = w.toFloat()
         buttonHeight = h.toFloat()
@@ -97,6 +103,7 @@ class LoadButton @JvmOverloads constructor(
         circleBottom = buttonHeight - radius
     }
 
+    //Draw the elements of the custom View
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
 
@@ -113,12 +120,14 @@ class LoadButton @JvmOverloads constructor(
         canvas?.drawText(buttonText, rectX, rectY, paint)
     }
 
+    //Call both animations (loadingButton and Circle)
     private fun animateAll() {
         animateLoadButton()
         animateCircle()
         animationRunning = true
     }
 
+    //Animate the loading bar
     private fun animateLoadButton() {
         animator = ValueAnimator.ofFloat(0f, maxWidth)
         animator.duration = 2000
@@ -132,6 +141,7 @@ class LoadButton @JvmOverloads constructor(
         animator.start()
     }
 
+    //Animate the circle effect
     private fun animateCircle() {
         animatorCircle = ValueAnimator.ofFloat(0f, 360f)
         animatorCircle.duration = 2000

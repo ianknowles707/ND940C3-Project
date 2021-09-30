@@ -128,9 +128,7 @@ class MainActivity : AppCompatActivity() {
                     //Set the button state back to 'completed'
                     animated_button.buttonState=ButtonState.Completed
                     sendNotification(filename, returnedError, downloadID, downloadStatus)
-
                 }
-
             }
         }
     }
@@ -164,7 +162,6 @@ class MainActivity : AppCompatActivity() {
             ).show()
             animated_button.buttonState = ButtonState.Completed
         }
-
     }
 
 
@@ -188,5 +185,4 @@ class MainActivity : AppCompatActivity() {
         val githubEnd = resources.getString(R.string.github_url_end)
         url = "$baseURL$githubEnd"
     }
-
 }

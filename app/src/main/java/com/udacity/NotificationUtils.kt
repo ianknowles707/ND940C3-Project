@@ -48,6 +48,7 @@ fun NotificationManager.sendNotification(
     notify(id.toInt(), notificationBuilder.build())
 }
 
+//Create extension function to cancel the specific notification (by Id)
 fun NotificationManager.cancelNotification(id: Long){
     cancel(id.toInt())
 }

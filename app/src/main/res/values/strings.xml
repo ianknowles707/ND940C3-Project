@@ -5,7 +5,7 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_detail">DetailActivity</string>
     <string name="download_button_default">Download</string>
-    <string name="download_button_loading">Download in progress...</string>
+    <string name="download_button_loading">Download in progress…</string>
 
 <!--    Define strings for notification-->
     <string name="notification_title">LoadApp download request </string>

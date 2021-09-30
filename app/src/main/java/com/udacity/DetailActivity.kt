@@ -41,12 +41,13 @@ class DetailActivity : AppCompatActivity() {
         error_textview.text = errorText
         showError(status)
 
-        //
+        //Exit Detail Activity
         button_return.setOnClickListener {
             finish()
         }
     }
 
+    //Function cancels the specific notification based on Id
     private fun cancelNotification(id: Long) {
         val notificationManager = ContextCompat.getSystemService(
             applicationContext,
@@ -55,6 +56,7 @@ class DetailActivity : AppCompatActivity() {
         notificationManager.cancelNotification(id)
     }
 
+    //Set the text to display from the strings.xml file, based on filename
     private fun determineDownloadDisplayText(filename: String?): String {
         var displayText = ""
         when (filename) {
@@ -68,6 +70,7 @@ class DetailActivity : AppCompatActivity() {
         return displayText
     }
 
+    //Only show error message if download failed
     private fun showError(status: String?) {
         if (status == applicationContext.getString(R.string.download_success)) {
             error_label_textview.visibility = View.INVISIBLE
@@ -92,6 +95,7 @@ class DetailActivity : AppCompatActivity() {
         return errorMessageReadable
     }
 
+    //Status is shown in green for success, red for failed
     private fun setStatusColor(status: String?) {
         if (status == applicationContext.getString(R.string.download_success)) {
             status_textview.setTextColor(Color.GREEN)
