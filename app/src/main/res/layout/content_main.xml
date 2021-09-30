@@ -1,75 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".MainActivity"
-    tools:showIn="@layout/activity_main">
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
 
-    <ImageView
-        android:id="@+id/image_download"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main_layout"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:background="@color/colorPrimaryDark"
-        android:contentDescription="@string/download_image_content_description"
-        android:scaleType="centerCrop"
-        android:src="@drawable/download_image"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <RadioGroup
-        android:id="@+id/radio_group"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="@dimen/normal_padding"
-        app:layout_constraintBottom_toTopOf="@id/animated_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/image_download">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:context=".MainActivity"
+        tools:showIn="@layout/activity_main">
 
-        <RadioButton
-            android:id="@+id/radio_button_glide"
-            style="@style/label_text"
+        <ImageView
+            android:id="@+id/image_download"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="@color/colorPrimaryDark"
+            android:contentDescription="@string/download_image_content_description"
+            android:scaleType="centerCrop"
+            android:src="@drawable/download_image"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <RadioGroup
+            android:id="@+id/radio_group"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_small"
-            android:minHeight="48dp"
-            android:onClick="onRadioButtonClicked"
-            android:text="@string/glide_description" />
+            android:padding="@dimen/normal_padding"
+            app:layout_constraintBottom_toTopOf="@id/animated_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/image_download">
 
-        <RadioButton
-            android:id="@+id/radio_loadapp"
-            style="@style/label_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_small"
-            android:minHeight="48dp"
-            android:onClick="onRadioButtonClicked"
-            android:text="@string/loadapp_description" />
+            <RadioButton
+                android:id="@+id/radio_button_glide"
+                style="@style/label_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_small"
+                android:minHeight="48dp"
+                android:onClick="onRadioButtonClicked"
+                android:text="@string/glide_description" />
 
-        <RadioButton
-            android:id="@+id/radio_retrofit"
-            style="@style/label_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_small"
-            android:minHeight="48dp"
-            android:onClick="onRadioButtonClicked"
-            android:text="@string/retrofit_description" />
-    </RadioGroup>
+            <RadioButton
+                android:id="@+id/radio_loadapp"
+                style="@style/label_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_small"
+                android:minHeight="48dp"
+                android:onClick="onRadioButtonClicked"
+                android:text="@string/loadapp_description" />
 
-    <com.udacity.LoadButton
-        android:id="@+id/animated_button"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:layout_margin="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/radio_group" />
+            <RadioButton
+                android:id="@+id/radio_retrofit"
+                style="@style/label_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_small"
+                android:minHeight="48dp"
+                android:onClick="onRadioButtonClicked"
+                android:text="@string/retrofit_description" />
+        </RadioGroup>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <com.udacity.LoadButton
+            android:id="@+id/animated_button"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_margin="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/radio_group" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

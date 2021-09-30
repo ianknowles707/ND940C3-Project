@@ -32,7 +32,7 @@
     <string name="button_loading">We are loading </string>
 
 <!--    Define strings for the download function-->
-    <string name="glide_base_url">https://github.com/bumptech/glideXXX</string>
+    <string name="glide_base_url">https://github.com/bumptech/glide</string>
     <string name="loadapp_base_url">https://github.com/udacity/nd940-c3-advanced-android-programming-project-starter</string>
     <string name="retrofit_base_url">https://github.com/bumptech/glide</string>
     <string name="github_url_end">/archive/refs/heads/master.zip</string>
