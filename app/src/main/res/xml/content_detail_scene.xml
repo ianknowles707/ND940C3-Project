@@ -6,17 +6,19 @@
     <ConstraintSet android:id="@+id/start">
         <Constraint
             android:id="@+id/filename_label_textview"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/filename_textview"
             app:layout_constraintStart_toStartOf="parent" />
 
         <Constraint
             android:id="@+id/filename_textview"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/filename_label_textview" />
 
         <Constraint
             android:id="@+id/status_label_textview"
@@ -116,7 +118,6 @@
         app:autoTransition="animateToEnd"
         app:constraintSetEnd="@id/end"
         app:constraintSetStart="@+id/start"
-        app:duration="2000">
-    </Transition>
+        app:duration="2000"></Transition>
 
 </MotionScene>

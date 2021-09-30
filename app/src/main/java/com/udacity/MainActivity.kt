@@ -125,6 +125,7 @@ class MainActivity : AppCompatActivity() {
                         Log.i("Download ", returnedError.toString())
                         downloadStatus = resources.getString(R.string.download_failed)
                     }
+                    //Set the button state back to 'completed'
                     animated_button.buttonState=ButtonState.Completed
                     sendNotification(filename, returnedError, downloadID, downloadStatus)
 
